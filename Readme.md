@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
 * Студент: [Денис](https://up.htmlacademy.ru/ecmascript-individual/1/user/2303913).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Колегов](https://htmlacademy.ru/profile/kollegoff).
 
 ---
 
