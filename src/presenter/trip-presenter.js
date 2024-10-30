@@ -28,23 +28,27 @@ export default class TripPresenter {
     render(this.#sortComponent, this.#tripContainer);
     render(this.#eventListComponent, this.#tripContainer);
 
-    render(new EditPointView({
-      point: this.#points[0],
-      offers: this.#offersModel.getByType(this.#points[0].type),
-      destination: this.#destionationsModel.getById(this.#points[0].destination),
-      destinations: this.#destionationsModel.get(),
-    }),
-    this.#eventListComponent.element
-    );
+    // render(new EditPointView({
+    //   point: this.#points[0],
+    //   offers: this.#offersModel.getByType(this.#points[0].type),
+    //   destination: this.#destionationsModel.getById(this.#points[0].destination),
+    //   destinations: this.#destionationsModel.get(),
+    // }),
+    // this.#eventListComponent.element
+    // );
 
-    for (let i = 1; i < this.#points.length; i++) {
-
-      render(new PointView({
-        point: this.#points[i],
-        offers: this.#offersModel.getByType(this.#points[i].type),
-        destination: this.#destionationsModel.getById(this.#points[i].destination),
-      }),
-      this.#eventListComponent.element);
+    for (let i = 0; i < this.#points.length; i++) {
+      this.#renderPoint(
+        this.#points[i],
+        this.#offersModel.getByType(this.#points[i].type),
+        this.#destionationsModel.getById(this.#points[i].destination)
+      );
     }
+  }
+
+  #renderPoint(point, offers, destination) {
+    const pointComponent = new PointView({point, offers, destination});
+
+    render(pointComponent, this.#eventListComponent.element);
   }
 }
