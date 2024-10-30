@@ -5,37 +5,37 @@ import { getDestinations } from '../mock/destinations';
 const POINT_COUNT = 3;
 
 export default class MockService {
-  destinations = [];
-  offers = [];
-  points = [];
+  #destinations = [];
+  #offers = [];
+  #points = [];
 
   constructor() {
-    this.destinations = this.generateDestinations();
-    this.offers = this.generateOffers();
-    this.points = this.generatePoints();
+    this.#destinations = this.#generateDestinations();
+    this.#offers = this.#generateOffers();
+    this.#points = this.#generatePoints();
   }
 
-  getPoints() {
-    return this.points;
+  get points() {
+    return this.#points;
   }
 
-  getOffers() {
-    return this.offers;
+  get offers() {
+    return this.#offers;
   }
 
-  getDestinations() {
-    return this.destinations;
+  get destinations() {
+    return this.#destinations;
   }
 
-  generatePoints() {
+  #generatePoints() {
     return Array.from({length: POINT_COUNT}, getRandomPoint);
   }
 
-  generateOffers() {
+  #generateOffers() {
     return getOffers();
   }
 
-  generateDestinations() {
+  #generateDestinations() {
     return getDestinations();
   }
 }
