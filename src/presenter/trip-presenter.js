@@ -1,6 +1,7 @@
 import { render, replace } from '../framework/render';
 import EditPointView from '../view/edit-point-view';
 import EventListView from '../view/event-list-view';
+import NoPointView from '../view/no-point-view';
 import PointView from '../view/point-view';
 import SortView from '../view/sort-view';
 
@@ -72,8 +73,14 @@ export default class TripPresenter {
   }
 
   #renderTripBoard() {
+    if (this.#points.length === 0) {
+      render(new NoPointView(), this.#tripContainer);
+      return;
+    }
+
     render(this.#sortComponent, this.#tripContainer);
     render(this.#eventListComponent, this.#tripContainer);
+
 
     for (let i = 0; i < this.#points.length; i++) {
       this.#renderPoint(

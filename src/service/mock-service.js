@@ -2,7 +2,7 @@ import { getRandomPoint } from '../mock/points';
 import { getOffers } from '../mock/offers';
 import { getDestinations } from '../mock/destinations';
 
-const POINT_COUNT = 3;
+const POINT_COUNT = 4;
 
 export default class MockService {
   #destinations = [];
