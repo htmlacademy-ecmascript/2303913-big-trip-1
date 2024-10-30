@@ -1,4 +1,5 @@
 import {createElement} from '../render.js';
+
 import './abstract-view.css';
 /** @const {string} Класс, реализующий эффект "покачивания головой" */
 const SHAKE_CLASS_NAME = 'shake';
@@ -15,6 +16,7 @@ export default class AbstractView {
       throw new Error('Can\'t instantiate AbstractView, only concrete one.');
     }
   }
+
   /**
    * Геттер для получения элемента
    * @returns {HTMLElement} Элемент представления
@@ -25,6 +27,7 @@ export default class AbstractView {
     }
     return this.#element;
   }
+
   /**
    * Геттер для получения разметки элемента
    * @abstract
@@ -33,10 +36,12 @@ export default class AbstractView {
   get template() {
     throw new Error('Abstract method not implemented: get template');
   }
+
   /** Метод для удаления элемента */
   removeElement() {
     this.#element = null;
   }
+
   /**
    * Метод, реализующий эффект "покачивания головой"
    * @param {shakeCallback} [callback] Функция, которая будет вызвана после завершения анимации

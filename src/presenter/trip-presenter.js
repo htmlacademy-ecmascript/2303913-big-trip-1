@@ -1,4 +1,4 @@
-import { render } from '../render';
+import { render } from '../framework/render';
 import EditPointView from '../view/edit-point-view';
 import EventListView from '../view/event-list-view';
 import PointView from '../view/point-view';
@@ -27,7 +27,7 @@ export default class TripPresenter {
       destination: this.destionationsModel.getById(this.points[0].destination),
       destinations: this.destionationsModel.get(),
     }),
-    this.eventListComponent.getElement()
+    this.eventListComponent.element
     );
 
     for (let i = 1; i < this.points.length; i++) {
@@ -37,7 +37,7 @@ export default class TripPresenter {
         offers: this.offersModel.getByType(this.points[i].type),
         destination: this.destionationsModel.getById(this.points[i].destination),
       }),
-      this.eventListComponent.getElement());
+      this.eventListComponent.element);
     }
   }
 }

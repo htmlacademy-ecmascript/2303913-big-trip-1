@@ -1,5 +1,5 @@
 import { POINT_TYPES } from '../const';
-import { createElement } from '../render';
+import AbstractView from '../framework/view/abstract-view';
 import { formatStringToDateTime } from '../utils';
 
 const POINT_BLANK = {
@@ -144,32 +144,27 @@ function createEditPointTemplate({point = POINT_BLANK, offers, destination = POI
 
 }
 
-export default class EditPointView {
+export default class EditPointView extends AbstractView {
+  #point = null;
+  #offers = null;
+  #destination = null;
+  #destinations = null;
+
   constructor({point, offers, destination, destinations}) {
-    this.point = point;
-    this.offers = offers;
-    this.destination = destination;
-    this.destinations = destinations;
+    super();
+
+    this.#point = point;
+    this.#offers = offers;
+    this.#destination = destination;
+    this.#destinations = destinations;
   }
 
-  getTemplate() {
+  get template() {
     return createEditPointTemplate({
-      point: this.point,
-      offers: this.offers,
-      destination: this.destination,
-      destinations: this.destinations
+      point: this.#point,
+      offers: this.#offers,
+      destination: this.#destination,
+      destinations: this.#destinations
     });
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }
