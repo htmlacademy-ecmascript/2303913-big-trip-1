@@ -1,6 +1,6 @@
 import { POINT_TYPES } from '../const';
 import AbstractView from '../framework/view/abstract-view';
-import { formatStringToDateTime } from '../utils';
+import { formatStringToDateTime } from '../utils/point';
 
 const POINT_BLANK = {
   type: 'taxi',

@@ -11,10 +11,6 @@ const HOUR_IN_DAY = 24;
 const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
 const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
 
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
 function getPointDuration(dateFrom, dateTo) {
   const timeDiff = dayjs(dateTo).diff(dayjs(dateFrom));
 
@@ -48,7 +44,6 @@ function formatStringToTime(date) {
 }
 
 export {
-  getRandomArrayElement,
   getPointDuration,
   formatStringToDateTime,
   formatStringToTime,

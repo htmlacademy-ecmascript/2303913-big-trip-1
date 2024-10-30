@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view';
-import { getPointDuration, formatStringToShortDate, formatStringToTime } from '../utils';
+import { getPointDuration, formatStringToShortDate, formatStringToTime } from '../utils/point';
 
 function createTripPointOfferTemplate(point, offers) {
   return offers
