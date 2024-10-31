@@ -6,6 +6,7 @@ import PointsModel from './model/points-model.js';
 import OffersModel from './model/offers-model.js';
 import DestionationModel from './model/destinations-model.js';
 import MockService from './service/mock-service.js';
+import FilterPresenter from './presenter/filter-presenter.js';
 
 const siteContentContainer = document.querySelector('.trip-events');
 const siteHeaderContainer = document.querySelector('.page-header');
@@ -24,7 +25,13 @@ const tripPresenter = new TripPresenter({
   destionationsModel
 });
 
+const filterPresenter = new FilterPresenter({
+  container: filtersContainer,
+  pointsModel
+});
+
 render(new TripInfoView(), headerContentContainer, RenderPosition.AFTERBEGIN);
-render(new FiltersView(), filtersContainer);
+// render(new FiltersView(), filtersContainer);
 
 tripPresenter.init();
+filterPresenter.init();

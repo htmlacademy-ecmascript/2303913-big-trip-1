@@ -1,15 +1,15 @@
 import AbstractView from '../framework/view/abstract-view';
-import { FILTER_TYPE } from '../const';
+import { capitalize } from '../utils/point';
 
-function createFilterItem(filterType, isChecked) {
+function createFilterItem({type, hasPoints}, isChecked) {
   return `<div class="trip-filters__filter">
-            <input id="filter-${filterType.toLowerCase()}" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="${filterType.toLowerCase()}" ${isChecked ? 'checked' : ''}>
-            <label class="trip-filters__filter-label" for="filter-${filterType.toLowerCase()}">${filterType}</label>
+            <input id="filter-${type}" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="${type}" ${isChecked ? 'checked' : ''} ${hasPoints ? 'disabled' : ''}>
+            <label class="trip-filters__filter-label" for="filter-${type}">${capitalize(type)}</label>
           </div>`;
 }
 
-function createFiltersTemplate() {
-  const filterItemsTemplate = FILTER_TYPE.map((type, index) => createFilterItem(type, index === 0)).join('');
+function createFiltersTemplate(filters) {
+  const filterItemsTemplate = filters.map((filter, index) => createFilterItem(filter, index === 0)).join('');
 
   return `<form class="trip-filters" action="#" method="get">
                 ${filterItemsTemplate}
@@ -19,7 +19,15 @@ function createFiltersTemplate() {
 }
 
 export default class FiltersView extends AbstractView {
+  #filters = [];
+
+  constructor({filters}) {
+    super();
+
+    this.#filters = filters;
+  }
+
   get template() {
-    return createFiltersTemplate();
+    return createFiltersTemplate(this.#filters);
   }
 }

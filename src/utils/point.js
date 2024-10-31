@@ -43,9 +43,30 @@ function formatStringToTime(date) {
   return dayjs(date).format('HH:mm');
 }
 
+function isPointFuture(point) {
+  return dayjs().isBefore(point.dateFrom);
+}
+
+function isPointPresent(point) {
+  return (dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo));
+}
+
+function isPointPast(point) {
+  return dayjs().isAfter(point.dateTo);
+}
+
+function capitalize(str) {
+  const firstLetter = str.charAt(0).toUpperCase();
+  return str.replace(str[0], firstLetter);
+}
+
 export {
   getPointDuration,
   formatStringToDateTime,
   formatStringToTime,
-  formatStringToShortDate
+  formatStringToShortDate,
+  isPointFuture,
+  isPointPresent,
+  isPointPast,
+  capitalize
 };
