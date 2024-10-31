@@ -1,7 +1,6 @@
 import AbstractView from '../framework/view/abstract-view';
+import { SORT_TYPE, DISABLED_SORT_TYPE } from '../const';
 
-const SORT_TYPE = ['Day', 'Event', 'Time', 'Price', 'Offers'];
-const DISABLED_SORT_TYPE = new Set(['Event', 'Offers']);
 
 function createSortItem(sortType, isChecked, isDisabled) {
   return `<div class="trip-sort__item  trip-sort__item--${sortType.toLowerCase()}">
