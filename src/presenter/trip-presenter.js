@@ -12,7 +12,8 @@ export default class TripPresenter {
   #destionationsModel = null;
 
   #sortComponent = new SortView();
-  #eventListComponent = new EventListView();
+  #pointListComponent = new EventListView();
+  #noPointsComponent = new NoPointView();
 
   #points = [];
 
@@ -29,7 +30,7 @@ export default class TripPresenter {
     this.#renderTripBoard();
   }
 
-  #renderPoint(point, offers, destination, destinations) {
+  #renderPoint({point, offers, destination, destinations}) {
     const escKeyDownHandler = (evt) => {
       if (evt.key === 'Escape') {
         evt.preventDefault();
@@ -69,26 +70,40 @@ export default class TripPresenter {
       replace(pointComponent, pointEditComponent);
     }
 
-    render(pointComponent, this.#eventListComponent.element);
+    render(pointComponent, this.#pointListComponent.element);
+  }
+
+  #renderPoints() {
+    this.#points
+      .forEach((point) => this.#renderPoint({
+        point,
+        offers: this.#offersModel.getByType(point.type),
+        destination: this.#destionationsModel.getById(point.destination),
+        destinations: this.#destionationsModel.get(),
+      }));
+  }
+
+  #renderSort() {
+    render(this.#sortComponent, this.#tripContainer);
+  }
+
+  #renderNoPoints() {
+    render(this.#noPointsComponent, this.#tripContainer);
+  }
+
+  #renderPointList() {
+    render(this.#pointListComponent, this.#tripContainer);
+
+    this.#renderPoints();
   }
 
   #renderTripBoard() {
     if (this.#points.length === 0) {
-      render(new NoPointView(), this.#tripContainer);
+      this.#renderNoPoints();
       return;
     }
 
-    render(this.#sortComponent, this.#tripContainer);
-    render(this.#eventListComponent, this.#tripContainer);
-
-
-    for (let i = 0; i < this.#points.length; i++) {
-      this.#renderPoint(
-        this.#points[i],
-        this.#offersModel.getByType(this.#points[i].type),
-        this.#destionationsModel.getById(this.#points[i].destination),
-        this.#destionationsModel.get(),
-      );
-    }
+    this.#renderSort();
+    this.#renderPointList();
   }
 }
