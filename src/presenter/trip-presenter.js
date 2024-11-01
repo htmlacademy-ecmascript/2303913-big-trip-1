@@ -4,6 +4,7 @@ import EventListView from '../view/event-list-view';
 import NoPointView from '../view/no-point-view';
 import PointView from '../view/point-view';
 import SortView from '../view/sort-view';
+import PointPresenter from './point-presenter';
 
 export default class TripPresenter {
   #tripContainer = null;
@@ -31,46 +32,11 @@ export default class TripPresenter {
   }
 
   #renderPoint({point, offers, destination, destinations}) {
-    const escKeyDownHandler = (evt) => {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-
-        replaceFormToCard();
-
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    };
-
-    const pointComponent = new PointView({
-      point,
-      offers,
-      destination,
-      onEditClick: () => {
-        replaceCardToForm();
-        document.addEventListener('keydown', escKeyDownHandler);
-      },
+    const pointPresenter = new PointPresenter({
+      pointListComponent: this.#pointListComponent,
     });
 
-    const pointEditComponent = new EditPointView({
-      point,
-      offers,
-      destination,
-      destinations,
-      onFormSubmit: () => {
-        replaceFormToCard();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      },
-    });
-
-    function replaceCardToForm() {
-      replace(pointEditComponent, pointComponent);
-    }
-
-    function replaceFormToCard() {
-      replace(pointComponent, pointEditComponent);
-    }
-
-    render(pointComponent, this.#pointListComponent.element);
+    pointPresenter.init({point, offers, destination, destinations});
   }
 
   #renderPoints() {
