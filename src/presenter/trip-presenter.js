@@ -3,6 +3,7 @@ import EventListView from '../view/event-list-view';
 import NoPointView from '../view/no-point-view';
 import SortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
+import {updateItem} from '../utils/common';
 
 export default class TripPresenter {
   #tripContainer = null;
@@ -23,17 +24,17 @@ export default class TripPresenter {
     this.#offersModel = offersModel;
     this.#destionationsModel = destionationsModel;
 
-    this.#points = this.#pointsModel.get();
+    this.#points = structuredClone(this.#pointsModel.get());
   }
 
   init() {
     this.#renderTripBoard();
-    console.log(this.#pointsPresenters);
   }
 
   #renderPoint({point, offers, destination, destinations}) {
     const pointPresenter = new PointPresenter({
       pointListComponent: this.#pointListComponent.element,
+      onDataChange: this.#handlePointChange,
     });
 
     pointPresenter.init({point, offers, destination, destinations});
@@ -49,6 +50,17 @@ export default class TripPresenter {
         destinations: this.#destionationsModel.get(),
       }));
   }
+
+  #handlePointChange = (updatedPoint) => {
+    this.#points = updateItem(this.#points, updatedPoint);
+
+    this.#pointsPresenters.get(updatedPoint.id).init({
+      point: updatedPoint,
+      offers: this.#offersModel.getByType(updatedPoint.type),
+      destination: this.#destionationsModel.getById(updatedPoint.destination),
+      destinations: this.#destionationsModel.get(),
+    });
+  };
 
   #renderSort() {
     render(this.#sortComponent, this.#tripContainer);

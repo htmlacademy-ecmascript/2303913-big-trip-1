@@ -13,8 +13,11 @@ export default class PointPresenter {
   #destination = null;
   #destinations = null;
 
-  constructor({pointListComponent}) {
+  #handleDataChange = null;
+
+  constructor({pointListComponent, onDataChange}) {
     this.#pointListComponent = pointListComponent;
+    this.#handleDataChange = onDataChange;
   }
 
   init({point, offers, destination, destinations}) {
@@ -24,13 +27,14 @@ export default class PointPresenter {
     this.#destinations = destinations;
 
     const prevPointComponent = this.#pointComponent;
-    const prevePointEditComponent = this.#pointEditComponent;
+    const prevPointEditComponent = this.#pointEditComponent;
 
     this.#pointComponent = new PointView({
       point: this.#point,
       offers: this.#offers,
       destination: this.#destination,
       onEditClick: this.#handleEditClick,
+      onFavoriteClick: this.#handleFavoriteClick,
     });
 
     this.#pointEditComponent = new EditPointView({
@@ -41,7 +45,7 @@ export default class PointPresenter {
       onFormSubmit: this.#handleFormSubmit,
     });
 
-    if (prevPointComponent === null || prevePointEditComponent === null) {
+    if (prevPointComponent === null || prevPointEditComponent === null) {
       render(this.#pointComponent, this.#pointListComponent);
       return;
     }
@@ -50,12 +54,12 @@ export default class PointPresenter {
       replace(this.#pointComponent, prevPointComponent);
     }
 
-    if (this.#pointListComponent.contains(prevePointEditComponent.element)) {
-      replace(this.#pointEditComponent, prevePointEditComponent);
+    if (this.#pointListComponent.contains(prevPointEditComponent.element)) {
+      replace(this.#pointEditComponent, prevPointEditComponent);
     }
 
     remove(prevPointComponent);
-    remove(prevPointComponent);
+    remove(prevPointEditComponent);
   }
 
   destroy() {
@@ -85,7 +89,12 @@ export default class PointPresenter {
     this.#replaceCardToForm();
   };
 
-  #handleFormSubmit = () => {
+  #handleFavoriteClick = () => {
+    this.#handleDataChange({...this.#point, isFavorite: !this.#point.isFavorite});
+  };
+
+  #handleFormSubmit = (point) => {
+    this.#handleDataChange(point);
     this.#replaceFormToCard();
   };
 }
