@@ -1,8 +1,6 @@
-import { render, replace } from '../framework/render';
-import EditPointView from '../view/edit-point-view';
+import { render } from '../framework/render';
 import EventListView from '../view/event-list-view';
 import NoPointView from '../view/no-point-view';
-import PointView from '../view/point-view';
 import SortView from '../view/sort-view';
 import PointPresenter from './point-presenter';
 
@@ -17,6 +15,7 @@ export default class TripPresenter {
   #noPointsComponent = new NoPointView();
 
   #points = [];
+  #pointsPresenters = new Map();
 
   constructor({tripContainer, pointsModel, offersModel, destionationsModel}) {
     this.#tripContainer = tripContainer;
@@ -29,6 +28,7 @@ export default class TripPresenter {
 
   init() {
     this.#renderTripBoard();
+    console.log(this.#pointsPresenters);
   }
 
   #renderPoint({point, offers, destination, destinations}) {
@@ -37,6 +37,7 @@ export default class TripPresenter {
     });
 
     pointPresenter.init({point, offers, destination, destinations});
+    this.#pointsPresenters.set(point.id, pointPresenter);
   }
 
   #renderPoints() {
@@ -55,6 +56,11 @@ export default class TripPresenter {
 
   #renderNoPoints() {
     render(this.#noPointsComponent, this.#tripContainer);
+  }
+
+  #clearPointList() {
+    this.#pointsPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointsPresenters.clear();
   }
 
   #renderPointList() {
