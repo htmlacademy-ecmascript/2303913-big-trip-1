@@ -35,6 +35,7 @@ export default class TripPresenter {
     const pointPresenter = new PointPresenter({
       pointListComponent: this.#pointListComponent.element,
       onDataChange: this.#handlePointChange,
+      onModeChange: this.#handleModeChange,
     });
 
     pointPresenter.init({point, offers, destination, destinations});
@@ -50,6 +51,10 @@ export default class TripPresenter {
         destinations: this.#destionationsModel.get(),
       }));
   }
+
+  #handleModeChange = () => {
+    this.#pointsPresenters.forEach((presenter) => presenter.resetView());
+  };
 
   #handlePointChange = (updatedPoint) => {
     this.#points = updateItem(this.#points, updatedPoint);
