@@ -7,6 +7,7 @@ export default class UiBlocker {
   /** @type {number} Время до блокировки интерфейса в миллисекундах */
   #lowerLimit;
 
+
   /** @type {number} Минимальное время блокировки интерфейса в миллисекундах */
   #upperLimit;
 
@@ -58,6 +59,7 @@ export default class UiBlocker {
       this.#removeClass();
       return;
     }
+
 
     setTimeout(this.#removeClass, this.#upperLimit - duration);
   }

@@ -1,4 +1,5 @@
 import {createElement} from '../render.js';
+
 import './abstract-view.css';
 
 /** @const {string} Класс, реализующий эффект "покачивания головой" */

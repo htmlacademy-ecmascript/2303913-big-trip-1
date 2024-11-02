@@ -2,6 +2,7 @@
  * Класс, реализующий паттерн Наблюдатель.
  */
 export default class Observable {
+  
   /** @type {Set<observerCallback>} Множество функций типа observerCallback */
   #observers = new Set();
 
