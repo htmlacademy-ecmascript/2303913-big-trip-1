@@ -1,4 +1,3 @@
-import FiltersView from './view/filters-view.js';
 import TripInfoView from './view/trip-info-view.js';
 import TripPresenter from './presenter/trip-presenter.js';
 import {render, RenderPosition} from './framework/render';
@@ -31,7 +30,6 @@ const filterPresenter = new FilterPresenter({
 });
 
 render(new TripInfoView(), headerContentContainer, RenderPosition.AFTERBEGIN);
-// render(new FiltersView(), filtersContainer);
 
 tripPresenter.init();
 filterPresenter.init();
